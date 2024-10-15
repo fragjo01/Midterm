@@ -5,24 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Race Schedule</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
+    <style>
+        body {
+            background-color: #f5f5f5;
+            color: #0a0909;
+        }
+        .hero {
+            background-color: #b00000;
+            color: #ffffff; 
+        }
+        .subtitle {
+            color: #ffffff;
+        }
+        .footer {
+            margin-top: 2rem;
+            text-align: center;
+            color: #000000;
+        }
+        .table th {
+            background-color: black;
+            color: #333;
+        }
+        .table td {
+            background-color: #f9f0f0;
+            color: #333;
+        }
+        .table tr:hover {
+            background-color: #e6e6e6;
+        }
+        .label {
+            color: rgb(0, 0, 0);
+        }
+        .button {
+            background-color: rgb(52, 202, 52);
+            color: white;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Formula 1 Race Schedule</h1>
-    <input type="text" id="seasonInput" placeholder="Enter season year (e.g., 2023)">
-    <button id="fetchRacesButton">Get Races</button>
+    <section class="hero is-large">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">Formula 1 Race Schedule</h1>
+                <h2 class="subtitle">Find out the race schedule for your favorite season!</h2>
+            </div>
+        </div>
+    </section>
 
-    <table id="raceTable">
-        <thead>
-            <tr>
-                <th>Round</th>
-                <th>Race Name</th>
-                <th>Location</th>
-                <th>Date</th>
-                <th>Details</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <div class="container">
+        <div class="field">
+            <label class="label" for="seasonInput">Enter season year (e.g., 2023)</label>
+            <div class="control">
+                <input class="input" type="text" id="seasonInput" placeholder="2023">
+            </div>
+        </div>
+        <div class="control">
+            <button class="button" id="fetchRacesButton">Get Races</button>
+        </div>
+
+        <table class="table is-striped is-hoverable is-fullwidth" id="raceTable">
+            <thead>
+                <tr>
+                    <th>Round</th>
+                    <th>Race Name</th>
+                    <th>Location</th>
+                    <th>Date</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                &copy; 2024 Formula 1. All rights reserved.
+            </p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
