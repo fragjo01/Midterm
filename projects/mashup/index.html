@@ -1,39 +1,29 @@
 <!DOCTYPE html>
-
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>TODO list</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Race Schedule</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
 </head>
+<body>
+    <h1>Formula 1 Race Schedule</h1>
+    <input type="text" id="seasonInput" placeholder="Enter season year (e.g., 2023)">
+    <button id="fetchRacesButton">Get Races</button>
 
-<body> 
-    <div class="container">
-        <div>
-            <label for="leagues">European Leagues</label>
-            <select id="leagues"></select>
-        </div>
-        
-    </div>
+    <table id="raceTable">
+        <thead>
+            <tr>
+                <th>Round</th>
+                <th>Race Name</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 
-    <div class="container">
-        <table id="List">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Date</th>
-                    <th>Home</th>
-                    <th>Away</th>
-                    <th>Get more information</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-
-    <script type="text/javascript" src="js/model.js"></script>
-    <script type="text/javascript" src="js/view.js"></script>
-    <script type="text/javascript" src="js/controller.js"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
