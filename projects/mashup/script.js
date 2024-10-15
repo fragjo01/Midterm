@@ -42,6 +42,7 @@ document.getElementById('fetchRacesButton').addEventListener('click', async () =
 			detailsButton.classList.add('details-button');
 			detailsButton.dataset.season = season;
 			detailsButton.dataset.round = race.round;
+			detailsButton.dataset.race = race.raceName;
 			detailsButton.dataset.circuit = race.Circuit.circuitName;
 			detailsButton.dataset.country = race.Circuit.Location.country;
 			detailsButton.textContent = 'More Info'; // Set button text
@@ -57,6 +58,7 @@ document.getElementById('fetchRacesButton').addEventListener('click', async () =
             button.addEventListener('click', async (event) => {
                 const season = event.target.getAttribute('data-season');
                 const round = event.target.getAttribute('data-round');
+				const raceName = event.target.getAttribute('data-race');
                 const circuitName = event.target.getAttribute('data-circuit');
                 const country = event.target.getAttribute('data-country');
 
@@ -64,7 +66,7 @@ document.getElementById('fetchRacesButton').addEventListener('click', async () =
                 if (detailsRow && detailsRow.classList.contains('details-row')) {
                     detailsRow.remove();
                 } else {
-                    await fetchRaceDetails(season, round, circuitName, country, event.target.closest('tr'));
+                    await fetchRaceDetails(season, round, circuitName, raceName, country, event.target.closest('tr'));
                 }
             });
         });
@@ -80,7 +82,7 @@ async function getData(url) {
         .catch(error => console.error(error));
 }
 
-async function fetchRaceDetails(season, round, circuitName, country, parentRow) {
+async function fetchRaceDetails(season, round, circuitName, raceName, country, parentRow) {
     try {
         const resultsResponse = await getData(`https://ergast.com/api/f1/${season}/${round}/results.json`);
         const resultsData = JSON.parse(resultsResponse);
@@ -90,8 +92,9 @@ async function fetchRaceDetails(season, round, circuitName, country, parentRow) 
         const qualifyingData = JSON.parse(qualifyingResponse);
         const qualifyingResults = qualifyingData.MRData.RaceTable.Races[0].QualifyingResults;
 
-        const trackInfoResponse = await getData(`https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(circuitName)}&format=json&prop=text&section=0&origin=*`);
+        const trackInfoResponse = await getData(`https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(raceName)}&format=json&prop=text&section=0&origin=*`);
         const trackInfoData = JSON.parse(trackInfoResponse);
+        console.log(trackInfoData);
 
         const trackHTML = trackInfoData.parse.text['*'];
         const parser = new DOMParser();
@@ -102,21 +105,24 @@ async function fetchRaceDetails(season, round, circuitName, country, parentRow) 
         let trackImage = '';
 
         if (infobox) {
-            const rows = infobox.querySelectorAll('tr');
-            rows.forEach(row => {
-                const header = row.querySelector('th');
-                const data = row.querySelector('td');
-                
-                if (header && data) {
-                    if (header.textContent.includes('Length') || header.textContent.includes('Track length')) {
-                        trackLength = data.textContent.trim();
-                    }
-                }
-            });
+			const rows = infobox.querySelectorAll('tr');
+			rows.forEach(row => {
+				const header = row.querySelector('th');
+				const data = row.querySelector('td');
+				
+				if (header && data) {
+					const headerText = header.textContent.trim();
+					const dataText = data.textContent.trim();
+					
+					if (headerText.includes('Length') || headerText.includes('Track length') || headerText.includes('Circuit length')) {
+						trackLength = dataText;
+					}
+				}
+			});
 
-            const imageElement = infobox.querySelector('img.mw-file-element');
-            trackImage = imageElement ? `https:${imageElement.src}` : '';
-        }
+			const imageElement = infobox.querySelector('img.mw-file-element');
+			trackImage = imageElement ? `${imageElement.src}` : '';
+		}
 
         const countryDataResponse = await getData(`https://restcountries.com/v3.1/name/${encodeURIComponent(country)}`);
         const countryData = JSON.parse(countryDataResponse);
