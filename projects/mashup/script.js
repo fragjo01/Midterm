@@ -141,7 +141,7 @@ async function fetchRaceDetails(season, round, circuitName, raceName, country, p
 
 		const flagImg = document.createElement('img');
 		flagImg.src = flagUrl;
-		flagImg.classList.add('flag');
+		flagImg.classList.add('image' , 'is-48x48');
 		flagImg.alt = 'National Flag';
 
 		titleDiv.appendChild(circuitText);
