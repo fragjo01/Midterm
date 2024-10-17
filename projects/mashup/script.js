@@ -82,7 +82,10 @@ document.getElementById('fetchRacesButton').addEventListener('click', async () =
 		feedback.textContent = "Please enter a valid season year, between 1950 and 2024.";
         document.getElementById('seasonInput').value = '';
         return;
-    }
+    }else {
+		let feedback = document.getElementById("feedbackMessage");
+		feedback.textContent = "";
+	}
 
     sessionStorage.setItem('season', season);
 
