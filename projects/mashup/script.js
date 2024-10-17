@@ -79,7 +79,8 @@ document.getElementById('fetchRacesButton').addEventListener('click', async () =
 
     if (!season || isNaN(season) || season < 1950 || season > 2024) {
 		let feedback = document.getElementById("feedbackMessage");
-		feedback.textContent = "Please enter a valid season year between 1950 and 2024.";
+		feedback.textContent = "Please enter a valid season year, between 1950 and 2024.";
+        document.getElementById('seasonInput').value = '';
         return;
     }
 
