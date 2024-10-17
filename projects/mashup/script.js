@@ -1,4 +1,4 @@
-const circuitImageMap = {
+const circuitImageData = {
     "Adelaide Street Circuit": "Adelaide_(long_route).svg",
     "Ain Diab": "Ain-Diab.svg",
     "Aintree": "Circuit_Aintree.svg",
@@ -10,7 +10,7 @@ const circuitImageMap = {
     "Baku City Circuit": "Baku_Formula_One_circuit_map.svg",
     "Circuito da Boavista": "Boavista_(Oporto).svg",
     "Brands Hatch": "Brands_Hatch_1976-1987.svg",
-    "Circuit Bremgarten": "Circuit_Bremgarten.svg",
+    "Circuit Bremgarten": "Dijon-Prenois_Circuit.svg",
     "Buddh International Circuit": "Buddh_Circuit_1.svg",
     "Circuit de Barcelona-Catalunya": "Circuit_de_Catalunya_moto_2021.svg",
     "Charade Circuit": "Circuit_Charade_1958_1988.png",
@@ -26,11 +26,11 @@ const circuitImageMap = {
     "Hockenheimring": "Hockenheim2012.svg",
     "Hungaroring": "Hungaroring.svg",
     "Autodromo Enzo e Dino Ferrari": "Imola_2009.svg",
-    "Indianapolis Motor Speedway": "Indianapolis_Motor_Speedway_-_road_course.svg",
+    "Indianapolis Motor Speedway": "Indianapolis_Oval.svg",
     "Autódromo José Carlos Pace": "Autódromo_José_Carlos_Pace_(AKA_Interlagos)_track_map.svg",
     "Istanbul Park": "Istanbul_park.svg",
     "Long Beach": "Long_Beach_1983.jpg",
-    "Circuit Paul Ricard": "Le_Castellet_circuit_map_Formula_One_2019_and_2021_with_corner_names_English_19_07_2021.svg", // Placeholder, confirm correct image
+    "Circuit Paul Ricard": "Le_Castellet_circuit_map_Formula_One_2019_and_2021_with_corner_names_English_19_07_2021.svg",
     "Circuit Gilles Villeneuve": "Île_Notre-Dame_(Circuit_Gilles_Villeneuve).svg",
     "Watkins Glen": "Watkins_Glen_1975-1983.png",
     "Circuit Park Zandvoort": "Zandvoort_Circuit.png",
@@ -44,7 +44,7 @@ const circuitImageMap = {
     "Autodromo Nazionale di Monza": "Monza_track_map.svg",
     "Red Bull Ring": "Spielberg_bare_map_numbers_contextless_2021_corner_names.svg",
     "Autódromo Hermanos Rodríguez": "Rodriguez_Circuit.svg",
-    "Silverstone Circuit": "Silverstone_Circuit_vector_map.png",
+    "Silverstone Circuit": "Silverstone_Circuit_2020.png",
     "Circuit de Spa-Francorchamps": "Spa-Francorchamps_of_Belgium.svg",
     "Yas Marina Circuit": "Yas_Marina_Circuit.svg" ,
 	"Jeddah Corniche Circuit": "Jeddah_Street_Circuit_2021.svg",
@@ -53,8 +53,14 @@ const circuitImageMap = {
 	"Las Vegas Strip Street Circuit": "Aut%C3%B3dromo_Jos%C3%A9_Carlos_Pace_%28AKA_Interlagos%29_track_map.svg",
 	"Yas Marina Circuit": "Yas_Marina_Circuit.png",
 	"Autódromo Internacional do Algarve": "Aut%C3%B3dromo_do_Algarve_F1_Sectors.svg",
-	"Indianapolis Motor Speedway": "Indianapolis_Motor_Speedway_-_road_course.svg",
-	"Reims-Gueux": "Circuit-Reims-1954.png",
+	"Reims-Gueux": "Le_Castellet_circuit_map_Formula_One_2019_and_2021_with_corner_names_English_19_07_2021.svg",
+	"Riverside International Raceway": "Austin_circuit.svg",
+	"Kyalami": "Kyalami_1992_Layout.png",
+	"Autodromo Enzo e Dino Ferrari": "Imola.svg",
+	"Circuit de Nevers Magny-Cours": "Le_Castellet_circuit_map_Formula_One_2019_and_2021_with_corner_names_English_19_07_2021.svg",
+	"Shanghai International Circuit": "Shanghai_International_Racing_Circuit_track_map.svg",
+	"Marina Bay Street Circuit": "Marina_Bay_circuit_2023.svg",
+	"Sochi Autodrom": "Circuit_Sochi.svg",
 
 };
 
@@ -173,7 +179,8 @@ async function fetchRaceDetails(season, round, circuitName, raceName, country, p
 
         const trackInfoResponse = await getData(`https://en.wikipedia.org/w/api.php?action=parse&page=${encodeURIComponent(raceName)}&format=json&origin=*`);
         const trackInfoData = JSON.parse(trackInfoResponse);
-
+		console.log(trackInfoData);
+		
         const htmlText = trackInfoData.parse.text['*'];
         const lookfor = /Circuit length<\/th><td class="infobox-data">([\d.]+)<span class="nowrap">&#160;<\/span>km/i;
         const match = htmlText.match(lookfor);
@@ -184,10 +191,13 @@ async function fetchRaceDetails(season, round, circuitName, raceName, country, p
 
         let trackImage = '';
         const images = trackInfoData.parse.images;
-        const circuitImageName = circuitImageMap[circuitName];
+		console.log(images);
+        const circuitImageName = circuitImageData[circuitName];
+		console.log(circuitName);
         for (const image of images) {
             if (image.includes(circuitImageName)) {
-                trackImage = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(image)}`;
+                trackImage = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(circuitImageName)}`;
+				
             }
         }
 
