@@ -16,18 +16,21 @@
         </div>
     </section>
 
-    <div class="container mt-5">
-        <div class="box">
-            <div class="field">
-                <label class="label" for="seasonInput">Enter season year (e.g., 2023)</label>
-                <div class="control">
-                    <input class="input is-info" type="text" id="seasonInput" placeholder="2023">
-                </div>
-            </div>
-            <div class="control">
-                <button class="button is-success" id="fetchRacesButton">Get Races</button>
+    <div class="container">
+        <div class="field">
+            <label class="label" for="seasonInput">Enter season year (e.g., 2023)</label>
+            <div class="SeasonInput">
+                <input class="input" type="text" id="seasonInput" placeholder="2023">
             </div>
         </div>
+		<div class="alertfeedbackmessage">
+			<p class ="content is-danger" id="feedbackMessage"> </p>
+		</div>
+        <div class="buttoncontainer">
+            <button class="button" id="fetchRacesButton">Get Races</button>
+        </div>
+		
+
 
         <table class="table is-striped is-hoverable is-fullwidth mt-4" id="raceTable">
             <thead class="has-background-info">

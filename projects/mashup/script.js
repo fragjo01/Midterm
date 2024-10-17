@@ -75,9 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.getElementById('fetchRacesButton').addEventListener('click', async () => {
     const season = document.getElementById('seasonInput').value;
+	
 
     if (!season || isNaN(season) || season < 1950 || season > 2024) {
-        alert('Please enter a valid season year between 1950 and 2024.');
+		let feedback = document.getElementById("feedbackMessage");
+		feedback.textContent = "Please enter a valid season year between 1950 and 2024.";
         return;
     }
 
@@ -89,7 +91,7 @@ document.getElementById('fetchRacesButton').addEventListener('click', async () =
 
         const races = data.MRData.RaceTable.Races;
         const raceTableBody = document.querySelector('#raceTable tbody');
-        raceTableBody.innerHTML = ''; 
+        raceTableBody.textContent = ''; 
 
         if (races.length === 0) {
             const noRaceRow = document.createElement('tr');
