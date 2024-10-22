@@ -64,15 +64,6 @@ const circuitImageData = {
 
 };
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const storedSeason = sessionStorage.getItem('season');
-    if (storedSeason) {
-        document.getElementById('seasonInput').value = storedSeason;
-    }
-});
-
 document.getElementById('fetchRacesButton').addEventListener('click', async () => {
     const season = document.getElementById('seasonInput').value;
 	
@@ -312,3 +303,10 @@ async function fetchRaceDetails(season, round, circuitName, raceName, country, p
         alert('Error fetching race details. Please try again later.');
     }
 }
+
+window.onload = function () {
+    const storedSeason = sessionStorage.getItem('season');
+    if (storedSeason) {
+        document.getElementById('seasonInput').value = storedSeason;
+    }
+};
