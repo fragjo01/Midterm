@@ -165,7 +165,6 @@ async function getData(url) {
 
 async function fetchRaceDetails(season, round, circuitName, raceName, country, parentRow) {
     try {
-		//Fetch 
         const resultsResponse = await getData(`https://ergast.com/api/f1/${season}/${round}/results.json`);
         const resultsData = JSON.parse(resultsResponse);
         const results = resultsData.MRData.RaceTable.Races[0]?.Results || [];
